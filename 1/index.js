@@ -6,18 +6,18 @@ var port = 8081
 var host = "127.0.0.1"
 
 var server = http.createServer((req, res) => {
-    res.writeHead(200, {'Content-Type': "application/json"})
+    res.writeHead(200, {'Content-Type': "application/pdf"})
 
-    let jsonRespnse = {
-        status: 200,
-        message: 'sucess',
-        result: ['cat', 'dog', 'lizard'],
-        code: 2000
-    }
+    fs.readFile('bilet.pdf', (err, data) => { 
+        if(err) {
+            res.json({'status': 'error', msg: err})
+        
+            return 
+        }
 
-    res.write(JSON.stringify(jsonRespnse))
-
-    res.end()
+        res.write(data)
+        res.end()
+    })
 })
 
 
